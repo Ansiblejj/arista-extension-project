@@ -1,0 +1,15 @@
+arista-eos-workspace/
+├── src/                    # High-performance source code
+│   └── packet_logic.pyx    # Cython source (.pyx)
+├── scripts/                # Provisioning and automation
+│   ├── bootstrap.cpy       # ZTP/copy templates (.cpy)
+│   └── health_check.py     # Standard automation (.py)
+├── config/                 # System metadata
+│   └── sysdb_map.pyxlm     # XML-integrated Python config (.pyxlm)
+├── build/                  # Compiled files (Excluded from Git)
+│   └── packet_logic.pyc    # Python bytecode (.pyc)
+├── extensions/             # Deployable bundles
+│   └── custom-tool.swix    # Final Arista extension (.swix)
+├── docs/                   # Full project documentation
+├── manifest.yaml           # SWIX build instructions
+└── .gitignore              # Prevents .pyc and .swi from being uploaded
