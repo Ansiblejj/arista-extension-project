@@ -1,0 +1,35 @@
+# Arista EOS Extension Repository
+
+## File Types & Their Work
+- **`.py`**: Main logic source.
+- **`.pyx`**: Cython performance source (compiles to C).
+- **`.pyc`**: Compiled bytecode for fast execution (auto-generated).
+- **`.cpy`**: Provisioning templates for ZTP.
+- **`.swix`**: The final deployable extension bundle.
+
+## Build Process
+1. Package `src/` into an RPM.
+2. Run `swix-create -i manifest.yaml output.swix my-tool.rpm`.
+3. Verify with `python3 scripts/manage.py`.
+
+```py
+#!/usr/bin/env python3
+import sys
+
+def main():
+    print("Arista Custom Extension: Monitoring active.")
+    # Add your SysDB or eAPI logic here
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()
+```
+The High-Performance Module (`src/speed.pyx`)
+Use this for heavy data processing. It compiles to `Cpyx`
+```pyx
+# Cython source for performance
+def fast_packet_check(int count):
+    cdef int i
+    for i in range(count):
+        pass # High-speed C loop logic here
+    return f"Processed {count} items at C speed."
