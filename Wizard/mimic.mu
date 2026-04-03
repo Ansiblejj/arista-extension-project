@@ -1,4 +1,4 @@
-// SampleDLL.csx
+// SampleDLL.cppx
 //
 
 #include "stdafx.h"
