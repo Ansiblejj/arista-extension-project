@@ -1,0 +1,26 @@
+project('my extensions', 'cython', 'c')
+
+# Find the Python installation
+py = import('python').find_installation(pure: false)
+
+# 1. Compile the High-Performance Cython (.pyx) module
+# This creates the shared object (.so) that runs at C speed
+py.extension_module(
+   'foo',
+   'src/foo.pyx',
+   install: true,
+   subdir: 'my_extensions'
+)
+
+# 2. Install standard Python (.py) automation logic
+py.install_sources(
+    'scripts/health_check.py',
+    subdir: 'my_extensions'
+)
+
+# 3. Install ZTP/Provisioning templates (.cpy)
+# We treat these as data files so EOS can find them
+install_data(
+    'scripts/bootstrap.cpy',
+    install_dir: '/usr/share/my_extensions/templates'
+)
