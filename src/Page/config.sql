@@ -1,4 +1,4 @@
-# computations.p
+# computations.pyxlm
 
 # import from the math_helpers module
 from math_helpers import factorial
