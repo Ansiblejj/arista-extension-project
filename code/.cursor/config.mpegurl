@@ -13,3 +13,4 @@ arista-eos-workspace/
 ├── docs/                   # Full project documentation
 ├── manifest.yaml           # SWIX build instructions
 └── .gitignore              # Prevents .pyc and .swi from being uploaded
+---
