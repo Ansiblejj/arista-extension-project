@@ -1,0 +1,295 @@
+= Preparing Boot Media
+The Fedora docs team
+:revnumber: unknown
+:revdate: currently slightly out of date
+
+Fedora images are `Hybrid ISOs` and can be used to create installation media with both optical and USB disks, for booting on both BIOS and UEFI systems.
+
+== Fedora Media Writer
+
+[application]*Fedora Media Writer* has been significantly improved and is now the official, tested and supported way to make bootable media. [application]*Fedora Media Writer* supports Linux, macOS, and Windows. It is an easy way to make
+bootable USB media to install Fedora (or other operating systems). Using [application]*Fedora Media Writer* is strongly encouraged, although other USB media creation software can work as well.
+
+Some of the new additions to [application]*Fedora Media Writer* are that Fedora Workstation and Server are easily and quickly accessible from the selection on the main screen. Further choices are available if you select the button below _Custom image_. This offers a selection of various Fedora Spins, such as Xfce or Mate.
+
+Historically, universal USB creation tools, such as [application]*Unetbootin*, are a popular way to create USB installers from ISOs intended for optical media. They typically create a filesystem on the USB drive by extracting files from the image, and writing [application]*syslinux* bootloader to the device.
+
+These methods circumvent the boot-loader configuration built into Fedora images, which are pre-partitioned and designed to boot on UEFI systems with SecureBoot enabled as well as BIOS systems, and thus they do not produce consistent results with Fedora images, especially on UEFI systems.
+
+The best results are produced by utilities that use a direct write method and do not modify the Fedora image.
+
+[WARNING]
+====
+Always think twice before writing an image to the device. The media creation methods described in this article are destructive.
+All data on the USB stick are deleted during the process, so make sure you have a back up of the data on the USB stick. Double check that you have selected correct device to write the image to!
+====
+
+=== Installing and running Fedora Media Writer
+
+==== On Fedora
+
+On Fedora 25 or later, [application]*Fedora Media Writer* is available in the default repository. You can use `dnf` to install the
+package.
+
+. To install the [application]*Fedora Media Writer* using:
++
+[subs="quotes, macros, attributes"]
+----
+$ [command]#sudo dnf install mediawriter#
+----
++
+. Run the [application]*Fedora Media Writer*:
++
+[subs="quotes, macros, attributes"]
+----
+$ [command]#mediawriter#
+----
++
+or in [application]*Gnome 3* select *Activities* and then click on [application]*Fedora Media Writer*.
+
+
+====  On other Linux distributions
+
+The best way to install [application]*Fedora Media Writer* on various Linux distributions is to use the pre-built _Flatpak_ package.
+The package can be obtained from the official Flatpak repository https://flathub.org/apps/details/org.fedoraproject.MediaWriter[Flathub.org].
+
+. To setup *Flatpak* on your Linux system, follow the guidelines on the https://flatpak.org/setup/[Flatpak documentation] page.
+
+. Run the application:
++
+[subs="quotes, macros, attributes"]
+----
+$ [command]#sudo mediawriter#
+----
+
+==== On Windows
+
+. Download the latest Windows Installer file from link:++https://fedoraproject.org++[fedoraproject.org]. The server automatically detects the running system and offers you the correct installation file for your Windows version.
+
+. Run the installation by double clicking the installer, and then continue through the set-up wizard. The Wizard lets you customize the software's installation if you choose to.
+
+. Run the application by clicking on a launcher.
++
+In Windows 8 and 10, the [application]*Fedora Media Writer* launcher will be placed in the _All apps_ menu under _F_. In Windows 10, you can just type [application]*Fedora Media Writer* in the search box on the task bar.
++
+If you get an error about a missing .dll file (the MSVC redistributable), the needed library is freely available here: link:++https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist++[Microsoft Visual C++ Redistributable latest supported downloads].
+
+
+==== On macOS
+
+. Download the latest Macintosh Disk Image (the package will have a .dmg extension) from link:++https://fedoraproject.org++[fedoraproject.org]. The server automatically detects the running system and offers a correct package for your macOS.
+
+. Open the `.dmg` file, and press and hold the kbd:[Ctrl] key while clicking on the [application]*Fedora Media Writer* application.
+
+. Press "`Open`" in the pop-up menu.
+
+. Click the "`Open`" button in the confirmation dialog, if it appears.
+
+=== Writing the ISO image to the USB Media.
+. Select the Fedora Edition you wish to make a bootable USB drive for.
++
+[[figu-fedora_media_writer_choose_flavor_linux]]
+.Fedora Media Writer Main Screen: Choose your Edition of Fedora
++
+image::fedora_media_writer/FMW-select-image-source1.png[Image of Fedora Media Writer Main Screen]
++
+The main selection lets you choose one of the default Fedora editions, Fedora *Workstation* or *Server*. [application]*Fedora Media Writer* displays more details about the edition before you can proceed with downloading the image and the USB creation. You can choose a different architecture, if you select _Other variants_.
+
+. Select "`Create Live USB`" to proceed.
++
+[[figu-fedora_media_writer_distro_information_fedora]]
+.Fedora Media Writer Distro Information
++
+image::fedora_media_writer/FMW-select-release-2.png[Image of Fedora Media Writer Distro Information Screen]
++
+Fedora Media Writer will automatically download the ISO for you. If you have downloaded the ISO before and placed it in the _Downloads_ directory, it will be immediately available to use.
++
+[[figu-fedora_media_writer_Automatic_download_fedora]]
+.Fedora Media Writer Automatic Download
++
+image::fedora_media_writer/FMW-download-options-3.png[Image of Fedora Media Writer Automatic Download]
+
+. Plug in a USB drive on which you want to create the bootable media.
+
+. To write the image onto the media, click the red btn:[Write to disk] button.
++
+[[figu-fedora_media_writer_write_to_device_linux]]
+.Fedora Media Writer Write to USB Device
++
+image::fedora_media_writer/FMW-writing-5.png[Image of Fedora Media Writer write to device red button]
+
+=== Other methods to create a live USB
+
+Using the *Fedora Media Writer* is highly recommended for everybody, because it offers a reliable way to create a live USB stick for Fedora installation.
+
+However, some experienced users may prefer to go through the creation process manually. If you decide to do so, you have to download the installation images and use an application to write them onto the USB stick.
+
+[NOTE]
+====
+If you have downloaded and verified the installation images manually, you still can write them onto the USB stick using *Fedora Media Writer*.
+====
+
+
+[[sect-preparing-obtaining-images]]
+==== Downloading Boot and Installation Images
+
+The Fedora Project offers different Editions tailored for some specific use cases. Choose the Fedora Edition best for you. You can also build your own by customizing Fedora after it's installed or by using a kickstart file as described in _Creating a Kickstart File_.
+
+//xref:advanced/Kickstart_Installations.adoc#sect-kickstart-file-create[Creating a Kickstart File]. 
+Kickstart installation requires the `netinstall` media type, or a direct installation booting method such as PXE; kickstarts are not supported with live images.
+
+Read more about Fedora Workstation, Fedora Cloud, Fedora Server and the available media types in _Downloading Fedora_.
+
+//xref:Downloading_Fedora.adoc#chap-downloading-fedora[Downloading Fedora].
+
+You can also choose a Fedora _Spin_ featuring favorite alternative desktops or tools for specialized tasks at link:++https://spins.fedoraproject.org++[].
+
+[[sect-verifying-images]]
+==== Verifying the Downloaded Image
+
+Because transmission errors or other problems may corrupt the Fedora image you have downloaded, it is important to verify the file's integrity. After the images are created, an operation is performed on the file that produces a value called a `checksum` using a complex mathematical algorithm. The operation is sufficiently complex that *any change* to the original file will produce a different checksum.
+
+By calculating the image's `checksum` on your own computer and comparing it to the original `checksum`, you can verify the image has not been tampered with or corrupted. The original checksum values are provided at link:++https://fedoraproject.org/security/++[], and are [command]#gpg# signed to demonstrate their integrity.
+
+[[sect-verifying-windows]]
+==== Verifying checksums on Windows systems
+
+. Download the Fedora image of your choice from link:++https://fedoraproject.org/++[] and the corresponding checksum file from link:++https://fedoraproject.org/security/++[]
+
+. Open a [command]#powershell# session.
+
+. Change to the directory containing the downloaded files.
++
+[subs="macros"]
+----
+> cd $HOME\Downloads\
+> ls
+
+Directory: C:\Users\Pete\Downloads
+
+Mode                LastWriteTime         Length  Name
+----                -------------         ------  ----
+-a---        11/25/2014  12:39 PM            272  Fedora-Server-21-x86_64-CHECKSUM
+-a---        11/25/2014  12:39 PM     2047868928  Fedora-Server-DVD-x86_64-21.iso
+
+----
+
+. Paste the following function to powershell for calculating and comparing checksums.
++
+----
+function Get-ImageVerification(){
+    param(
+        [Parameter(Mandatory=$true, Position=0)]
+        [string]$ImageFilePath,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string]$ChecksumFilePath
+    )
+
+    $expected_checksum = ((Get-Content $ChecksumFilePath | Select-String -Pattern (Split-Path $ImageFilePath -leaf)) -split " ")[-1].ToLower()
+    $download_checksum = (Get-FileHash -Path $ImageFilePath -Algorithm SHA256).Hash.ToLower()
+
+    echo "Download Checksum: $download_checksum"
+    echo "Expected Checksum: $expected_checksum"
+    if ( $download_checksum -eq "$expected_checksum" ) {
+        echo "Checksum test passed!"
+    } else {
+        echo "Checksum test failed."
+    }
+}
+----
+
+. Execute the function pasted in previous step
++
+----
+Get-ImageVerification .\Fedora-Server-DVD-x86_64-21.iso .\Fedora-Server-21-x86_64-CHECKSUM
+----
+
+[[sect-verifying-nix]]
+==== Verifying checksums on Linux and macOS systems
+
+. Download the Fedora image of your choice from link:++https://fedoraproject.org/get-fedora++[] and the corresponding checksum file from link:++https://fedoraproject.org/security/++[]
+
+. Open a terminal window, and navigate to the directory with the downloaded files.
++
+[subs="quotes, macros, attributes"]
+----
+$ [command]#cd ~/Downloads#
+----
+
+. Use the appropriate utility to verify the image checksum.
++
+** For Linux:
++
+[subs="macros, attributes"]
+----
+$ sha256sum -c *CHECKSUM
+----
++
+** For macOS:
++
+[subs="macros, attributes"]
+----
+$ grep '^SHA256' *-CHECKSUM | awk -F '[()=]' '{ print $4 "  " $2 }' | shasum -a 256 -c
+----
+
+=== Writing the images to USB media
+
+==== Creating USB media with [application]*GNOME Disks*
+. On a system with [application]*GNOME*, or with the [package]*gnome-disk-utility* package installed, open `Disks` using the system menu.
+
+. Click your USB device in the left column.
+
+. Click the menu icon in the upper right corner of the window, and choose the `Restore Disk Image` option.
+
+. Navigate to your image file and click `Start Restoring`. After a few minutes, it will report the process is complete and your installation media will be ready to use.
+
+==== Creating USB Media on the Linux command line
+. Open a terminal window and insert the usb drive.
+
+. Find the `device node` assigned to the drive. In the example below, the drive is given `sdd`.
++
+[subs="quotes, macros, attributes"]
+----
+$ [command]#dmesg|tail#
+[288954.686557] usb 2-1.8: New USB device strings: Mfr=0, Product=1, SerialNumber=2
+[288954.686559] usb 2-1.8: Product: USB Storage
+[288954.686562] usb 2-1.8: SerialNumber: 000000009225
+[288954.712590] usb-storage 2-1.8:1.0: USB Mass Storage device detected
+[288954.712687] scsi host6: usb-storage 2-1.8:1.0
+[288954.712809] usbcore: registered new interface driver usb-storage
+[288954.716682] usbcore: registered new interface driver uas
+[288955.717140] scsi 6:0:0:0: Direct-Access     Generic  STORAGE DEVICE   9228 PQ: 0 ANSI: 0
+[288955.717745] sd 6:0:0:0: Attached scsi generic sg4 type 0
+[288961.876382] sd 6:0:0:0: *sdd* Attached SCSI removable disk
+----
+
+. Use the [command]#dd# utility to write the image.
++
+[subs="macros"]
+----
+# dd if=/path/to/Fedora-Live-Security-x86_64-21.iso of=/dev/sdd
+----
++
+[WARNING]
+====
+Pay extreme attention to the source (`if=`) and target (`of=`) device. The `dd` command destroys all data on the
+target device. If you made a mistake, you could lose important data.
+====
+
+=== Creating a Boot CD or DVD
+In addition to creating a bootable USB flash drive, you can also use the provided ISO images to create bootable optical media (a CD or DVD). This approach may be necessary when installing Fedora on an older system which cannot boot from USB.
+
+[NOTE]
+====
+
+The exact steps you need to take to burn a bootable CD or DVD from an ISO image will vary depending on what disc burning software you use. This procedure only offers a general overview.
+
+====
+
+. Insert a blank CD or DVD into your system's CD or DVD burner.
+
+. Open your system's burning software - for example, [application]*Brasero* on Fedora systems with [application]*GNOME* desktop environment, or [application]*Nero* on Windows systems. In the software's main menu, find an option which lets you burn an ISO image to a disc. For example, in [application]*Brasero*, this option is `Burn image` in the main menu on the left side of the window.
+
+. When prompted, select the ISO image of Fedora to be burned, and the CD or DVD burner with a blank disc inside (if you have more than one drive).
+
+. Confirm your selection, and wait for the disc to be burned.
